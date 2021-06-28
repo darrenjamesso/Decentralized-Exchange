@@ -5,19 +5,14 @@ import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 contract Token {
 	using SafeMath for uint; 
 	
-	// Variables
 	string public name = 'Deej Token'; 
 	string public symbol = "DEEJ";
 	uint256 public decimals = 18;
 	uint256 public totalSupply;
 
-	// Tracking the Balances 
 	mapping(address => uint256) public balanceOf;
-
-	// Keep track of how many tokens the exchange is allowed to spend
 	mapping(address => mapping(address => uint256)) public allowance;
 
-	// Events
 	event Transfer(address indexed from, address indexed to, uint256 value);
 	event Approval(address indexed owner, address indexed spender, uint256 value);
 
@@ -41,7 +36,6 @@ contract Token {
 
 	}
 
-	// TO APPROVE TOKENS
 	function approve(address _spender, uint256 _value) public returns (bool success) {
 		require(_spender != address(0));
 		allowance[msg.sender][_spender] = _value;
@@ -49,8 +43,6 @@ contract Token {
 		return true;
 	}
 
-
-	// Tranfer From Function
 	function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
 		require(_value <= balanceOf[_from]);
 		require(_value <= allowance[_from][msg.sender]);
